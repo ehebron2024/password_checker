@@ -9,29 +9,29 @@ MIN_LENGTH = 10
 
 
 # Length function
-def check_length(pass_input: list[str]) -> tuple[bool, int]:
+def check_length(password: list[str]) -> tuple[bool, int]:
     #Analyzes password length against minimum of 10
     #Returns tuple containing bool if length is sufficient or not
     #Returns length of original password
-    original_length = len(pass_input)
+    original_length = len(password)
     long_enough = original_length >= MIN_LENGTH
     return (long_enough, original_length)
 
-def check_upper(pass_input: list[str]) -> bool:
+def check_upper(password: list[str]) -> bool:
     # checks at least one uppercase 
-    return any(char in string.ascii_uppercase for char in pass_input)
+    return any(char in string.ascii_uppercase for char in password)
 
-def check_lower(pass_input: list[str]) -> bool:
+def check_lower(password: list[str]) -> bool:
     # checks at least one lowercase 
-    return any(char in string.ascii_lowercase for char in pass_input)
+    return any(char in string.ascii_lowercase for char in password)
 
-def check_digit(pass_input: list[str]) -> bool:
+def check_digit(password: list[str]) -> bool:
     # checks at least one digit 
-    return any(char in string.digits for char in pass_input)
+    return any(char in string.digits for char in password)
 
-def check_special(pass_input: list[str]) -> bool:
+def check_special(password: list[str]) -> bool:
     # checks for at least one special character
-    return any(char in string.punctuation for char in pass_input)
+    return any(char in string.punctuation for char in password)
 
 
 ## provide report to user 
@@ -55,27 +55,27 @@ def generate_report(long_enough: bool, length: int, has_upper: bool, has_lower: 
     
     return report_lines, strength
 
-app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def home():
     report_data = None
     strength = None
     pass_input = ""
     
     if request.method == 'POST':
-        pass_input = request.form.get('Password: ')
+        pass_input = request.form.get('password')
 
         if pass_input:
-            pass_input = list(pass_input)
+            
             long_enough, original_length = check_length(pass_input)
             has_upper = check_upper(pass_input)
             has_lower = check_lower(pass_input)
             has_digit = check_digit(pass_input)
             has_special = check_special(pass_input)
 
-        # Pass results to report function
-        report_data, strength = generate_report(long_enough, original_length, has_upper, has_lower, has_digit, has_special)
+            # Pass results to report function
+            report_data, strength = generate_report(long_enough, original_length, has_upper, has_lower, has_digit, has_special)
     
-    return render_template('index.html', report_data=report_data, strength=strength, Password=pass_input)
+    return render_template('index.html', report_data=report_data, strength=strength, pass_input=password)
 
 
 if __name__ == "__main__":
