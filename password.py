@@ -65,12 +65,14 @@ def home():
         pass_input = request.form.get('pass_input')
 
         if pass_input:
+            # Convert the password string into a list of characters
+            password_list = list(pass_input)
             
-            long_enough, original_length = check_length(pass_input)
-            has_upper = check_upper(pass_input)
-            has_lower = check_lower(pass_input)
-            has_digit = check_digit(pass_input)
-            has_special = check_special(pass_input)
+            long_enough, original_length = check_length(password_list)
+            has_upper = check_upper(password_list)
+            has_lower = check_lower(password_list)
+            has_digit = check_digit(password_list)
+            has_special = check_special(password_list)
 
             # Pass results to report function
             report_data, strength = generate_report(long_enough, original_length, has_upper, has_lower, has_digit, has_special)

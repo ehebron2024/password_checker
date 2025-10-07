@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eden's Secure Password Checker</title>
     <style>
         body { font-family: sans-serif; max-width: 600px; margin: 40px auto; background-color: #f8f9fa; color: #343a40; }
@@ -20,25 +21,22 @@
 </head>
 <body>
     <div class="container">
-        <h1>Eden's Secure Password Checker</h1>
-        
+        <h1>Eden's Secure Password Strength Checker</h1>
         <form method="POST">
-            <form method="POST">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password"> <button type="submit">Check Strength</button>
-              </form>
+            <label for="pass_input">Enter Password:</label>
+            <input type="text" id="pass_input" name="pass_input" required>
+            <button type="submit">Check</button>
         </form>
 
         {% if report_data %}
         <div class="results">
-            <h3>Strength Report:</h3>
-            {% for name, status, message in report_data %}
-                <div class="result-item {{ 'pass' if status else 'fail' }}">
-                    <span>{{ name }}</span>
-                    <span>{{ message.split(': ')[1] }}</span>
-                </div>
-            {% endfor %}
-            <div class="strength">{{ strength }}</div>
+            <h2>Report:</h2>
+            <ul>
+                {% for item in report_data %}
+                    <li>{{ item[0] }}: {{ item[2] }}</li>
+                {% endfor %}
+            </ul>
+            <h3>{{ strength }}</h3>
         </div>
         {% endif %}
     </div>
