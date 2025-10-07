@@ -62,7 +62,7 @@ def home():
     pass_input = ""
     
     if request.method == 'POST':
-        pass_input = request.form.get('pass_input)
+        pass_input = request.form.get('pass_input')
 
         if pass_input:
             
