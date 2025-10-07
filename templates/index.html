@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eden's Secure Password Checker</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; background-color: #f8f9fa; color: #343a40; }
+        .container { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #005f73; }
+        form { display: flex; gap: 10px; margin-bottom: 20px; }
+        input[type="text"] { flex-grow: 1; padding: 12px; border: 1px solid #ced4da; border-radius: 4px; font-size: 16px; }
+        button { padding: 12px 20px; background-color: #0a9396; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #005f73; }
+        .results h3, .strength { border-top: 1px solid #eee; padding-top: 15px; margin-top: 20px; }
+        .result-item { display: flex; justify-content: space-between; padding: 10px; border-radius: 4px; margin-bottom: 8px; }
+        .pass { color: #2d6a4f; background-color: #d8f3dc; }
+        .fail { color: #9d0208; background-color: #ffccd5; }
+        .strength { font-size: 1.2em; font-weight: bold; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Eden's Secure Password Checker</h1>
+        
+        <form method="POST">
+            <input type="text" name="password" placeholder="Enter a password..." value="{{ password or '' }}">
+            <button type="submit">Check Strength</button>
+        </form>
+
+        {% if report_data %}
+        <div class="results">
+            <h3>Strength Report:</h3>
+            {% for name, status, message in report_data %}
+                <div class="result-item {{ 'pass' if status else 'fail' }}">
+                    <span>{{ name }}</span>
+                    <span>{{ message.split(': ')[1] }}</span>
+                </div>
+            {% endfor %}
+            <div class="strength">{{ strength }}</div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
