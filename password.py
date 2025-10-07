@@ -62,7 +62,7 @@ def home():
     pass_input = ""
     
     if request.method == 'POST':
-        pass_input = request.form.get('password')
+        pass_input = request.form.get('pass_input)
 
         if pass_input:
             
@@ -75,7 +75,7 @@ def home():
             # Pass results to report function
             report_data, strength = generate_report(long_enough, original_length, has_upper, has_lower, has_digit, has_special)
     
-    return render_template('index.html', report_data=report_data, strength=strength, pass_input=password)
+    return render_template('index.html', report_data=report_data, strength=strength, pass_input=pass_input)
 
 
 if __name__ == "__main__":
